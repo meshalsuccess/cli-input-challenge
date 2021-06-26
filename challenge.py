@@ -8,8 +8,14 @@ Steps:
 3- find the right side number and the left side number - relative to the operator
 4- check the condition of each number, if it is whole, proper fraction, or improper fraction and solve it
 5- put right number, operator, left number together and look for an evaluation technique
-6- the answer will be mostly float type, seperate whole and integer from each other, and get the 
+6- the answer will be mostly float type, seperate whole and integer from each other, and return the fraction in the right format as a string
+7- to convert a decimal to fraction, 
+    7.1- multiply by accuracy decimals (3 decimals == 1000) 
+    7.2- divide by accuracy to balance the number (without this the number will change)
+    7.3- find the GCD between the nom and denom
+    7.4- divide both nom and denom by GCD and we will have the simplist format
 """
+import math
 
 def cliChallenge(operation):
     #operation += " "
@@ -32,9 +38,16 @@ def cliChallenge(operation):
     leftFinalNum = breakingNum(leftNum)
     rightFinalNum = breakingNum(rightNum) #now both are floats
 
-    #5- put right number, operator, left number together and look for an evaluation technique
+    ##5- put right number, operator, left number together and look for an evaluation technique
     answer = eval(str(leftFinalNum) + usedOperator + str(rightFinalNum))
-    return answer
+
+    ##6- return the fraction in the right format as a string -- since the format is x/x, it should be a string, 1st seperate the whole num from fraction
+    ## then solve for fraction alone. if the whole num is not 0, return as x_x/x else return as x/x or x only
+    wholeNumAns = int(answer) #this will round down always even if it is 9.999 will be 9
+    decimealAns = answer - wholeNumAns #this will give us the decimal that should be converted into a fraction
+    fraction = convertToFraction(decimealAns) #calling helper function
+    finalAnswer = str(wholeNumAns) + "_" + fraction
+    return finalAnswer
 
 #helper function to reduce redundant code. It takes a string and removes all the spaces from it
 def removingSpaces(numToClean): 
@@ -56,4 +69,16 @@ def breakingNum(numToBreak):
     fraction = numToBreak[dividor+1 :]
     num = int(wholeNum) + eval(fraction)
     return num
+
+#helper function that converts decimal into fraction
+def convertToFraction(numToConvert):
+    nom = numToConvert * 1000 #adding the accuracy
+    denom = 1000
+    gcd = math.gcd(int(nom),denom)
+
+    nom /= gcd
+    denom /= gcd
+    fraction = str(int(nom)) + "/" + str(int(denom))
+    return fraction
+
 print(cliChallenge("12_1/2   +    5_1/4"))
