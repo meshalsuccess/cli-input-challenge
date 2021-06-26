@@ -62,12 +62,24 @@ def removingSpaces(numToClean):
             idx +=1 #preventing incrementing
     return cleanNum
 
-#helper function that takes a string containing a fraction and returns a float
 def breakingNum(numToBreak):
-    dividor = numToBreak.index('_') #since the _ sign is the dividor between whole number and fraction
-    wholeNum = numToBreak[ : dividor]
-    fraction = numToBreak[dividor+1 :]
-    num = int(wholeNum) + eval(fraction)
+    """
+    
+    Helper function that takes a string containing a fraction and returns a float.
+
+    The function checks if the number is whole or not first then perform the calculations necessary.
+    The '_' is the key.
+
+    """
+    if "_" in numToBreak: #if there is _ then we have a fraction and a whole number
+        dividor = numToBreak.index('_') #since the _ sign is the dividor between whole number and fraction
+        wholeNum = numToBreak[ : dividor]
+        fraction = numToBreak[dividor+1 :]
+        num = int(wholeNum) + eval(fraction)
+    elif "_" not in numToBreak and "/" in numToBreak: #if we have only / and no _ then we have a fraction only
+        num = eval(numToBreak) #evaluating the fraction will make it a decimal number
+    else: #if there is not _ and no / but we have a number, that means it's a whole number or integer
+        num = int(numToBreak)
     return num
 
 #helper function that converts decimal into fraction
@@ -81,4 +93,4 @@ def convertToFraction(numToConvert):
     fraction = str(int(nom)) + "/" + str(int(denom))
     return fraction
 
-print(cliChallenge("12_1/2   +    5_1/4"))
+print(cliChallenge(" 1  +    5_1/4"))
