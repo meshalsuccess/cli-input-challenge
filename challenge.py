@@ -6,8 +6,8 @@ Steps:
 1- take an input -- string 
 2- find the operator -- has spaces around it
 3- find the right side number and the left side number - relative to the operator
-4- check the condition of each number, if it is whole, proper fraction, or improper fraction and solve it
-5- put right number, operator, left number together and look for an evaluation technique
+4- check the condition of each number, if it is whole, proper fraction, or improper fraction and solve it to become in form of x/x improper fraction
+5- check the operation type as the calculation differes based on the operastion
 6- the answer will be mostly float type, seperate whole and integer from each other, and return the fraction in the right format as a string
 7- to convert a decimal to fraction, 
     7.1- multiply by accuracy decimals (3 decimals == 1000) 
@@ -36,10 +36,12 @@ def cliChallenge(operation):
     rightNum =removingSpaces(rightSide)
     leftNum = removingSpaces(leftSide) #both right and left are spaceless now
     leftFinalNum = breakingNum(leftNum)
-    rightFinalNum = breakingNum(rightNum) #now both are floats
+    rightFinalNum = breakingNum(rightNum) #string in the form of x/x
 
-    ##5- put right number, operator, left number together and look for an evaluation technique
-    answer = eval(str(leftFinalNum) + usedOperator + str(rightFinalNum))
+    ##5- check the operation type
+    if usedOperator == '+':
+        additionFunction(leftFinalNum, rightFinalNum)
+    answer = None
 
     ##6- return the fraction in the right format as a string -- since the format is x/x, it should be a string, 1st seperate the whole num from fraction
     ## then solve for fraction alone. if the whole num is not 0, return as x_x/x else return as x/x or x only
@@ -65,7 +67,7 @@ def removingSpaces(numToClean):
 def breakingNum(numToBreak):
     """
     
-    Helper function that takes a string containing a fraction and returns a float.
+    Helper function that takes a string containing a fraction and returns a string of x/x.
 
     The function checks if the number is whole or not first then perform the calculations necessary.
     The '_' is the key.
@@ -74,23 +76,45 @@ def breakingNum(numToBreak):
     if "_" in numToBreak: #if there is _ then we have a fraction and a whole number
         dividor = numToBreak.index('_') #since the _ sign is the dividor between whole number and fraction
         wholeNum = numToBreak[ : dividor]
-        fraction = numToBreak[dividor+1 :]
-        num = int(wholeNum) + eval(fraction)
-    elif "_" not in numToBreak and "/" in numToBreak: #if we have only / and no _ then we have a fraction only
-        num = eval(numToBreak) #evaluating the fraction will make it a decimal number
+        fraction = numToBreak[dividor+1 :] #the fraction is a string now in the form of x/x
+        dividor = fraction.index('/')
+        nom = fraction[ : dividor] #this will assign the characters before / to nom
+        denom = fraction[dividor +1 : ] #this will assign the characters after / to denom
+        num = convertToFraction(wholeNum, denom, nom) #pass them as strings, returns a string in the form of x/x improper fraction
+        return num
     else: #if there is not _ and no / but we have a number, that means it's a whole number or integer
-        num = int(numToBreak)
-    return num
+        return numToBreak
 
 #helper function that converts decimal into fraction
-def convertToFraction(numToConvert):
-    nom = numToConvert * 1000 #adding the accuracy
-    denom = 1000
-    gcd = math.gcd(int(nom),denom)
-
-    nom /= gcd
-    denom /= gcd
-    fraction = str(int(nom)) + "/" + str(int(denom))
+def convertToFraction(wholeNum, denom, nom):
+    
+    denom, nom, wholeNum = int(denom), int(nom), int(wholeNum) #changing the types of strings to integers
+    newNom = wholeNum * denom + nom
+    fraction = str(newNom) + '/' + str(denom) # now we have an improper fraaction that is the equivelant of x_x/x
     return fraction
 
-print(cliChallenge(" 1  +    5_1/4"))
+def additionFunction(left, right):
+    """
+    The addition function performs the same addition to fractions only.
+
+    Steps:
+    a) if the denom of both are equal, then it adds the noms
+    b) if the denoms are not equal, then it finds the Least Common Multiple and multiplies are noms and denoms then adds noms to gether
+
+    """
+    
+    return None
+
+def LCM(leftDenom, rightDenom):
+    if leftDenom > rightDenom:
+        highest = leftDenom
+    elif rightDenom > leftDenom:
+        highest = rightDenom
+    else:
+        return 1
+    while True:
+        if highest % leftDenom == 0 and highest % rightDenom == 0:
+            break
+        highest +=1
+    return highest
+print(cliChallenge(" 1  +    5_2/3"))
