@@ -2,6 +2,7 @@
 This script has the helping function needed.
 
 """
+import math
 #helper function to reduce redundant code. It takes a string and removes all the spaces from it
 def removingSpaces(numToClean): 
     """
@@ -92,3 +93,31 @@ def multiplyer(leftDenom,rightDenom, lcm):
     leftMultiplyer = lcm//leftDenom
     rightMultiplyer = lcm//rightDenom
     return leftMultiplyer, rightMultiplyer
+
+def simplify(fraction):
+    """
+    Helper function that simplifies a fraction if it is improper and returns a string.
+
+    """
+    num = findingNom(fraction)
+    nom, denom = num[0], num[1]
+    print("this is the NOM :: " + str(nom))
+    print("this is the denom :: " + str(denom))
+    print("this is the gcd " + str(math.gcd(nom,denom)))
+    if nom == denom:
+        return 1
+    elif nom < denom:
+        finalFraction = str(nom) + '/' + str(denom)
+        return finalFraction
+    GCF = math.gcd(nom,denom)
+    nom //= GCF
+    denom //= GCF
+    if denom == 1:
+        return nom
+    wholeNum = 0
+    while nom > denom:
+        wholeNum += 1
+        nom -= denom
+
+    finalAnswer = str(wholeNum) + '_' + str(nom) + '/' + str(denom) 
+    return finalAnswer

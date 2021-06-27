@@ -10,7 +10,7 @@ Steps:
 5- check the operation type as the calculation differes based on the operations
 6- simplify the improper fractions to become proper ones before printing them to the user
 """
-from helperFunctions import removingSpaces, breakingNum
+from helperFunctions import removingSpaces, breakingNum, simplify
 from operations import operationFunctionSelector
 def cliChallenge(operation):
     """
@@ -39,7 +39,7 @@ def cliChallenge(operation):
 
     ##5- check the operation type
     finalAnswer = operationFunctionSelector(leftFinalNum, rightFinalNum, usedOperator)
-    
+    finalAnswer = simplify(finalAnswer)
     return finalAnswer
 
-print(cliChallenge(" 5  /    2_1/4"))
+print(cliChallenge(" 20  +    15"))
