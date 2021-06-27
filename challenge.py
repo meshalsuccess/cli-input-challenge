@@ -42,4 +42,4 @@ def cliChallenge(operation):
     finalAnswer = simplify(finalAnswer)
     return finalAnswer
 
-print(cliChallenge(" 20  +    15"))
+print(cliChallenge(" 15  -    15"))

@@ -107,6 +107,8 @@ def simplify(fraction):
     if nom == denom:
         return 1
     elif nom < denom:
+        if nom == 0:
+            return 0
         finalFraction = str(nom) + '/' + str(denom)
         return finalFraction
     GCF = math.gcd(nom,denom)
