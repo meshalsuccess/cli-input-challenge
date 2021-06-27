@@ -68,3 +68,18 @@ def subtractionFunction(left, right):
         answerNom = leftNom - rightNom #subtracting noms to solve for subtraction
         answerDenom = leftDenom
     return answerNom, answerDenom
+
+def multiplicationFunction(left, right):
+    """
+    
+    The multiplication function multiplies noms together and denoms together.
+
+    """
+    #the left and right numbers are strings in the form of x/x
+    left = findingNom(left)
+    right = findingNom(right)
+    leftNom, leftDenom = left[0], left[1] #integers
+    rightNom, rightDenom = right[0], right[1] #integers
+    answerNom = leftNom * rightNom #multiplying noms 
+    answerDenom = leftDenom * rightDenom #multiplying denoms
+    return answerNom, answerDenom

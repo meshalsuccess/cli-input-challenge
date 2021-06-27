@@ -11,7 +11,7 @@ Steps:
 6- simplify the improper fractions to become proper ones before printing them to the user
 """
 from helperFunctions import removingSpaces, breakingNum
-from operations import additionFunction, subtractionFunction
+from operations import additionFunction, subtractionFunction, multiplicationFunction
 def cliChallenge(operation):
     """
     This is the main function that calls other helper funcions and returns the final answer as a string
@@ -44,6 +44,9 @@ def cliChallenge(operation):
     elif usedOperator == '-':
         answerTuple = subtractionFunction(leftFinalNum, rightFinalNum)
         finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
+    elif usedOperator == '*':
+        answerTuple = multiplicationFunction(leftFinalNum, rightFinalNum)
+        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
     return finalAnswer
 
-print(cliChallenge(" 1_5/7  +    5"))
+print(cliChallenge(" 1_5/7  *    5"))
