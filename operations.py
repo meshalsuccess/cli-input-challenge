@@ -16,7 +16,7 @@ def operationFunctionSelector(leftFinalNum, rightFinalNum, usedOperator):
     if usedOperator == '+':
         answerTuple = additionFunction(leftFinalNum, rightFinalNum)
         finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
-        
+
     elif usedOperator == '-':
         answerTuple = subtractionFunction(leftFinalNum, rightFinalNum)
         finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
@@ -119,6 +119,9 @@ def divisionFunction(left, right):
     right = findingNom(right)
     leftNom, leftDenom = left[0], left[1] #integers
     rightNom, rightDenom = right[1], right[0] #integers
+    if rightDenom < 0 and rightNom > 0:
+        rightDenom = abs(rightDenom)
+        rightNom *= -1
     answerNom = leftNom * rightNom #multiplying noms 
     answerDenom = leftDenom * rightDenom #multiplying denoms
     return answerNom, answerDenom

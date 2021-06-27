@@ -101,23 +101,44 @@ def simplify(fraction):
     """
     num = findingNom(fraction)
     nom, denom = num[0], num[1]
-
+    #checking to see if we can cancel both -ve values otherwise, while loop below will be infinite
+    if nom < 0 and denom < 0:
+        nom, denom = abs(nom), abs(denom)
+    
     if nom == denom:
-        return 1
-    elif nom < denom:
+        return 1 
+    
+    elif abs(nom) < denom and math.gcd(abs(nom), denom) == 1: #sometimes we can have nom with abs higher than denom which means we need to simplify further
         if nom == 0:
             return 0
         finalFraction = str(nom) + '/' + str(denom)
         return finalFraction
-    GCF = math.gcd(nom,denom)
+    GCF = math.gcd(abs(nom),abs(denom))
     nom //= GCF
     denom //= GCF
     if denom == 1:
         return nom
     wholeNum = 0
-    while nom > denom:
+    while abs(nom) > denom:
         wholeNum += 1
-        nom -= denom
+        if nom >0:
+            nom -= denom
+        else:
+            nom += denom
 
-    finalAnswer = str(wholeNum) + '_' + str(nom) + '/' + str(denom) 
+    if wholeNum != 0:
+        finalAnswer = returnString(nom, denom, wholeNum)
+    else:
+        finalAnswer = returnString(nom, denom)
+    return finalAnswer
+
+def returnString(nom, denom, wholeNum = None):
+    if wholeNum == None:
+        finalAnswer = str(nom) + '/' + str(denom)
+        
+    else:
+        if nom < 0:
+            finalAnswer = '-' + str(wholeNum) + '_' + str(abs(nom)) + '/' + str(denom)
+        else:
+            finalAnswer = str(wholeNum) + '_' + str(nom) + '/' + str(denom)   
     return finalAnswer
