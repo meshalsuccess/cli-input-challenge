@@ -7,6 +7,30 @@ Since we are using fractions, the operations performed are not straight forward.
 """
 
 from helperFunctions import findingNom, multiplyer, LCM
+
+def operationFunctionSelector(leftFinalNum, rightFinalNum, usedOperator):
+    """
+    Operation Selector selects the operation type based on operator determined in the challenge script.
+
+    """
+    if usedOperator == '+':
+        answerTuple = additionFunction(leftFinalNum, rightFinalNum)
+        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
+        
+    elif usedOperator == '-':
+        answerTuple = subtractionFunction(leftFinalNum, rightFinalNum)
+        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
+
+    elif usedOperator == '*':
+        answerTuple = multiplicationFunction(leftFinalNum, rightFinalNum)
+        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
+
+    elif usedOperator == '/':
+        answerTuple = divisionFunction(leftFinalNum, rightFinalNum)
+        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
+    
+    return finalAnswer
+
 def additionFunction(left, right):
     """
     The addition function performs addition to fractions only.

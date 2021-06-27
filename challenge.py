@@ -11,7 +11,7 @@ Steps:
 6- simplify the improper fractions to become proper ones before printing them to the user
 """
 from helperFunctions import removingSpaces, breakingNum
-from operations import additionFunction, subtractionFunction, multiplicationFunction, divisionFunction
+from operations import operationFunctionSelector
 def cliChallenge(operation):
     """
     This is the main function that calls other helper funcions and returns the final answer as a string
@@ -38,18 +38,8 @@ def cliChallenge(operation):
     rightFinalNum = breakingNum(rightNum) #string in the form of x/x
 
     ##5- check the operation type
-    if usedOperator == '+':
-        answerTuple = additionFunction(leftFinalNum, rightFinalNum)
-        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
-    elif usedOperator == '-':
-        answerTuple = subtractionFunction(leftFinalNum, rightFinalNum)
-        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
-    elif usedOperator == '*':
-        answerTuple = multiplicationFunction(leftFinalNum, rightFinalNum)
-        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
-    elif usedOperator == '/':
-        answerTuple = divisionFunction(leftFinalNum, rightFinalNum)
-        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
+    finalAnswer = operationFunctionSelector(leftFinalNum, rightFinalNum, usedOperator)
+    
     return finalAnswer
 
 print(cliChallenge(" 5  /    2_1/4"))
