@@ -101,9 +101,7 @@ def simplify(fraction):
     """
     num = findingNom(fraction)
     nom, denom = num[0], num[1]
-    print("this is the NOM :: " + str(nom))
-    print("this is the denom :: " + str(denom))
-    print("this is the gcd " + str(math.gcd(nom,denom)))
+
     if nom == denom:
         return 1
     elif nom < denom:
