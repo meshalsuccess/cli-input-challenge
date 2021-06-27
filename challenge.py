@@ -7,18 +7,16 @@ Steps:
 2- find the operator -- has spaces around it
 3- find the right side number and the left side number - relative to the operator
 4- check the condition of each number, if it is whole, proper fraction, or improper fraction and solve it to become in form of x/x improper fraction
-5- check the operation type as the calculation differes based on the operastion
-6- the answer will be mostly float type, seperate whole and integer from each other, and return the fraction in the right format as a string
-7- to convert a decimal to fraction, 
-    7.1- multiply by accuracy decimals (3 decimals == 1000) 
-    7.2- divide by accuracy to balance the number (without this the number will change)
-    7.3- find the GCD between the nom and denom
-    7.4- divide both nom and denom by GCD and we will have the simplist format
+5- check the operation type as the calculation differes based on the operations
+6- simplify the improper fractions to become proper ones before printing them to the user
 """
-import math
 
 def cliChallenge(operation):
-    #operation += " "
+    """
+    This is the main function that calls other helper funcions and returns the final answer as a string
+
+    In this function, the numbers will be mostly strings not integers and when needed, the helper function will convert them to integers to ensure consistency.
+    """
     operatorsList = ["*", "/", "+","-"] #since the operation are stricted to be only four operation, they are mentioned here
     ##2- find the operator --  Loop in the string till we find the operator that has a space before & after it and it is in the list
     operatorIdx = 1
@@ -40,15 +38,9 @@ def cliChallenge(operation):
 
     ##5- check the operation type
     if usedOperator == '+':
-        additionFunction(leftFinalNum, rightFinalNum)
-    answer = None
-
-    ##6- return the fraction in the right format as a string -- since the format is x/x, it should be a string, 1st seperate the whole num from fraction
-    ## then solve for fraction alone. if the whole num is not 0, return as x_x/x else return as x/x or x only
-    wholeNumAns = int(answer) #this will round down always even if it is 9.999 will be 9
-    decimealAns = answer - wholeNumAns #this will give us the decimal that should be converted into a fraction
-    fraction = convertToFraction(decimealAns) #calling helper function
-    finalAnswer = str(wholeNumAns) + "_" + fraction
+        answerTuple = additionFunction(leftFinalNum, rightFinalNum)
+        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
+    
     return finalAnswer
 
 #helper function to reduce redundant code. It takes a string and removes all the spaces from it
@@ -82,8 +74,11 @@ def breakingNum(numToBreak):
         denom = fraction[dividor +1 : ] #this will assign the characters after / to denom
         num = convertToFraction(wholeNum, denom, nom) #pass them as strings, returns a string in the form of x/x improper fraction
         return num
+    elif "_" not in numToBreak and "/" in numToBreak: #if we do not have _ and only /, that means we have a fraction already
+        return numToBreak 
     else: #if there is not _ and no / but we have a number, that means it's a whole number or integer
-        return numToBreak
+        num = str(numToBreak) + '/' + str(1) #assigning 1 as a denom will help in calculations later
+        return num
 
 #helper function that converts decimal into fraction
 def convertToFraction(wholeNum, denom, nom):
@@ -93,6 +88,16 @@ def convertToFraction(wholeNum, denom, nom):
     fraction = str(newNom) + '/' + str(denom) # now we have an improper fraaction that is the equivelant of x_x/x
     return fraction
 
+def findingNom(fraction):
+    """
+    Helper function that takes a string in the from of x/x and seperates the nom and denom and returns them as integers in a tuple.
+
+    """
+    dividor = fraction.index('/') #the / is the dividor sign
+    nom = fraction[ : dividor]
+    denom = fraction[dividor+1 : ]
+    return int(nom), int(denom)
+
 def additionFunction(left, right):
     """
     The addition function performs the same addition to fractions only.
@@ -100,10 +105,29 @@ def additionFunction(left, right):
     Steps:
     a) if the denom of both are equal, then it adds the noms
     b) if the denoms are not equal, then it finds the Least Common Multiple and multiplies are noms and denoms then adds noms to gether
+    c) returns a tuple of integers nom,denom format
 
     """
+    #the left and right numbers are strings in the form of x/x
+    left = findingNom(left)
+    right = findingNom(right)
+    leftNom, leftDenom = left[0], left[1] #integers
+    rightNom, rightDenom = right[0], right[1] #integers
     
-    return None
+    #Step a:
+    if leftDenom == rightDenom:
+        answerNom = leftNom + rightNom
+        answerDenom = leftDenom
+    else: #Step b:
+        multiplyerTuple = multiplyer(leftDenom, rightDenom, LCM(leftDenom, rightDenom)) #calling helping functions to find multiplyers, integers
+        leftMultiplyer, rightMultiplyer = multiplyerTuple[0], multiplyerTuple[1]
+        leftNom *= leftMultiplyer
+        leftDenom *= leftMultiplyer
+        rightNom *= rightMultiplyer
+        rightDenom *= rightMultiplyer #now all denoms are equal and the noms were multiplied to have the fractios balanced
+        answerNom = leftNom + rightNom #adding noms to solve for addition
+        answerDenom = leftDenom
+    return answerNom, answerDenom
 
 def LCM(leftDenom, rightDenom):
     if leftDenom > rightDenom:
@@ -117,4 +141,10 @@ def LCM(leftDenom, rightDenom):
             break
         highest +=1
     return highest
-print(cliChallenge(" 1  +    5_2/3"))
+
+def multiplyer(leftDenom,rightDenom, lcm):
+    leftMultiplyer = lcm//leftDenom
+    rightMultiplyer = lcm//rightDenom
+    return leftMultiplyer, rightMultiplyer
+
+print(cliChallenge(" 1_5/7  +    5"))
