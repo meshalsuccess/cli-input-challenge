@@ -6,7 +6,7 @@ Since we are using fractions, the operations performed are not straight forward.
 
 """
 
-from helperFunctions import findingNom, multiplyer, LCM
+from helperFunctions import findingNom, multiplyer, LCM, returnString
 
 def operationFunctionSelector(leftFinalNum, rightFinalNum, usedOperator):
     """
@@ -15,20 +15,17 @@ def operationFunctionSelector(leftFinalNum, rightFinalNum, usedOperator):
     """
     if usedOperator == '+':
         answerTuple = additionFunction(leftFinalNum, rightFinalNum)
-        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
-
+        
     elif usedOperator == '-':
         answerTuple = subtractionFunction(leftFinalNum, rightFinalNum)
-        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
-
+        
     elif usedOperator == '*':
         answerTuple = multiplicationFunction(leftFinalNum, rightFinalNum)
-        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
-
+       
     elif usedOperator == '/':
         answerTuple = divisionFunction(leftFinalNum, rightFinalNum)
-        finalAnswer = str(answerTuple[0]) + '/' + str(answerTuple[1])
-    
+        
+    finalAnswer = returnString(answerTuple[0], answerTuple[1])  
     return finalAnswer
 
 def additionFunction(left, right):

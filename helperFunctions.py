@@ -38,13 +38,13 @@ def breakingNum(numToBreak):
         dividor = fraction.index('/')
         nom = fraction[ : dividor] #this will assign the characters before / to nom
         denom = fraction[dividor +1 : ] #this will assign the characters after / to denom
-        num = convertToFraction(wholeNum, denom, nom) #pass them as strings, returns a string in the form of x/x improper fraction
-        return num
+        return convertToFraction(wholeNum, denom, nom) #pass them as strings, returns a string in the form of x/x improper fraction
+        
     elif "_" not in numToBreak and "/" in numToBreak: #if we do not have _ and only /, that means we have a fraction already
         return numToBreak 
     else: #if there is not _ and no / but we have a number, that means it's a whole number or integer
-        num = str(numToBreak) + '/' + str(1) #assigning 1 as a denom will help in calculations later
-        return num
+        #num = returnString(numToBreak, 1) #assigning 1 as a denom will help in calculations later
+        return returnString(numToBreak, 1)
 
 
 def convertToFraction(wholeNum, denom, nom):
@@ -55,7 +55,7 @@ def convertToFraction(wholeNum, denom, nom):
     """    
     denom, nom, wholeNum = int(denom), int(nom), int(wholeNum) #changing the types of strings to integers
     newNom = wholeNum * denom + nom
-    fraction = str(newNom) + '/' + str(denom) # now we have an improper fraaction that is the equivelant of x_x/x
+    fraction = returnString(newNom, denom) # now we have an IMPROPER fraaction that is the equivelant of x_x/x
     return fraction
 
 def findingNom(fraction):
@@ -111,28 +111,34 @@ def simplify(fraction):
     elif abs(nom) < denom and math.gcd(abs(nom), denom) == 1: #sometimes we can have nom with abs higher than denom which means we need to simplify further
         if nom == 0:
             return 0
-        finalFraction = str(nom) + '/' + str(denom)
+        finalFraction = returnString(nom, denom)
         return finalFraction
-    GCF = math.gcd(abs(nom),abs(denom))
-    nom //= GCF
+    GCF = math.gcd(abs(nom),abs(denom)) #the reason for using abs here is difinition, we cannot find gcd for -ve and +ve
+    nom //= GCF #reducing both nom and denom by dividing them by gcd. this save a lot of time and we will reach simple fraction faster
     denom //= GCF
-    if denom == 1:
+
+    if denom == 1: #after dividing by gcf we might find have a denom ==1 like 10/5
         return nom
+    
     wholeNum = 0
-    while abs(nom) > denom:
+    while abs(nom) > denom: #this is tricky because if the user divides by -ve value in the cli, we need to make sure the final answer is the simplist we account for it here
         wholeNum += 1
-        if nom >0:
+        if nom >0: #if the nom is +ve, then we have no issues subtracting
             nom -= denom
-        else:
+        else: #if it is not, we should add till the abs is small than denom.
             nom += denom
 
-    if wholeNum != 0:
+    if wholeNum != 0: #if we did not loop after dividing by gcd, that means we already had a proper fraction but not simple and simplified it by dividing by gfd
         finalAnswer = returnString(nom, denom, wholeNum)
     else:
         finalAnswer = returnString(nom, denom)
     return finalAnswer
 
 def returnString(nom, denom, wholeNum = None):
+    """
+    Helper function that takes nom and denom and returns a fraction.
+
+    """
     if wholeNum == None:
         finalAnswer = str(nom) + '/' + str(denom)
         
