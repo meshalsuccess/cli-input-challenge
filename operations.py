@@ -71,7 +71,7 @@ def subtractionFunction(left, right):
 
 def multiplicationFunction(left, right):
     """
-    
+
     The multiplication function multiplies noms together and denoms together.
 
     """
@@ -80,6 +80,21 @@ def multiplicationFunction(left, right):
     right = findingNom(right)
     leftNom, leftDenom = left[0], left[1] #integers
     rightNom, rightDenom = right[0], right[1] #integers
+    answerNom = leftNom * rightNom #multiplying noms 
+    answerDenom = leftDenom * rightDenom #multiplying denoms
+    return answerNom, answerDenom
+
+def divisionFunction(left, right):
+    """
+
+    The division function flips the right side then multiplies noms together and denoms together.
+
+    """
+    #the left and right numbers are strings in the form of x/x
+    left = findingNom(left)
+    right = findingNom(right)
+    leftNom, leftDenom = left[0], left[1] #integers
+    rightNom, rightDenom = right[1], right[0] #integers
     answerNom = leftNom * rightNom #multiplying noms 
     answerDenom = leftDenom * rightDenom #multiplying denoms
     return answerNom, answerDenom
