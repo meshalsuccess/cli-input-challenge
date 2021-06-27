@@ -39,7 +39,7 @@ def breakingNum(numToBreak):
         nom = fraction[ : dividor] #this will assign the characters before / to nom
         denom = fraction[dividor +1 : ] #this will assign the characters after / to denom
         return convertToFraction(wholeNum, denom, nom) #pass them as strings, returns a string in the form of x/x improper fraction
-        
+
     elif "_" not in numToBreak and "/" in numToBreak: #if we do not have _ and only /, that means we have a fraction already
         return numToBreak 
     else: #if there is not _ and no / but we have a number, that means it's a whole number or integer
@@ -54,7 +54,11 @@ def convertToFraction(wholeNum, denom, nom):
     It uses the mathematical formula of creating improper functions.
     """    
     denom, nom, wholeNum = int(denom), int(nom), int(wholeNum) #changing the types of strings to integers
-    newNom = wholeNum * denom + nom
+    if wholeNum > 0:
+        newNom = wholeNum * denom + nom
+    else:
+        newNom = abs(wholeNum) * denom + nom
+        newNom *= -1
     fraction = returnString(newNom, denom) # now we have an IMPROPER fraaction that is the equivelant of x_x/x
     return fraction
 

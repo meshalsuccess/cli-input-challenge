@@ -42,4 +42,4 @@ def cliChallenge(operation):
     finalAnswer = simplify(finalAnswer)
     return finalAnswer
 
-print(cliChallenge(" 36_1/4  *    -35"))
+print(cliChallenge(" -36_1/2  /    -35"))
