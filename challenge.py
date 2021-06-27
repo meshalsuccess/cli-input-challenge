@@ -11,7 +11,7 @@ Steps:
 6- simplify the improper fractions to become proper ones before printing them to the user
 7- Check if there are multiple operations. if there are multiple ones, call multiple operation function, else contine
 """
-from helperFunctions import removingSpaces, breakingNum, simplify
+from helperFunctions import removingSpaces, breakingNum, simplify, checkIfValid
 from operations import operationFunctionSelector
 import multipleOperations
 def cliChallenge(operation):
@@ -24,7 +24,7 @@ def cliChallenge(operation):
     operatorsList = ["*", "/", "+","-"] #since the operation are stricted to be only four operation, they are mentioned here
     ##2- find the operator --  Loop in the string till we find the operator that has a space before & after it and it is in the list
     operatorIdx = 1
-    while operatorIdx < len(operation):
+    while operatorIdx < len(operation)-1:
         if operation[operatorIdx -1] == " " and operation[operatorIdx +1] == " " and operation[operatorIdx] in operatorsList:
             usedOperatorList.append(operation[operatorIdx]) #appending the operators to the used operators list
             #break #now operatorIdx is pointing to the operator
@@ -40,6 +40,8 @@ def cliChallenge(operation):
         ##4- check the condition of each number, if it is whole, proper fraction, or improper fraction and solve it, remove spaces
         rightNum =removingSpaces(rightSide)
         leftNum = removingSpaces(leftSide) #both right and left are spaceless now
+        if checkIfValid(leftNum) == None or checkIfValid(rightNum) == None:
+            return False
         leftFinalNum = breakingNum(leftNum)
         rightFinalNum = breakingNum(rightNum) #string in the form of x/x
 
@@ -47,7 +49,7 @@ def cliChallenge(operation):
         finalAnswer = operationFunctionSelector(leftFinalNum, rightFinalNum, usedOperator)
         finalAnswer = simplify(finalAnswer)
         return finalAnswer
-    else:
+    elif len(usedOperatorList) > 1:
         return None
 
 #print(cliChallenge(" -36_1/2  /    -35"))

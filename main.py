@@ -1,5 +1,13 @@
 from challenge import cliChallenge
 
-
-userInput = input("Please enter your operation below \n")
-print(cliChallenge(userInput))
+while True:
+    userInput = input("Please enter your operation below \n")
+    possibleAnswer = cliChallenge(userInput)
+    if possibleAnswer == False:
+        print("try again!")
+        continue
+    else:
+        print(possibleAnswer)
+        
+    
+    #print(cliChallenge(userInput))

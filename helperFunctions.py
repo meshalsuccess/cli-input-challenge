@@ -152,3 +152,21 @@ def returnString(nom, denom, wholeNum = None):
         else:
             finalAnswer = str(wholeNum) + '_' + str(nom) + '/' + str(denom)   
     return finalAnswer
+
+def checkIfValid(num):
+    """
+    Helper function that checks if the numbers entred by the user are in the valid format.
+
+    """
+    if '/' in num:
+        try:
+            lastChar = int(num[-1])
+            return 1
+        except:
+            print("please enter the number in the right format")
+            return None
+    elif '_' in num and '/' not in num:
+        print("please enter the number in the right format")
+        return None
+    elif '_' not in num and '/' not in num:
+        return 1
