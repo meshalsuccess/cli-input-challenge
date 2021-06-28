@@ -52,8 +52,8 @@ if the operation is division:
 
 ## Runtime and Space Complexity
 
-Since we have only one main loop and the other loops are very small if existed, then the runtime is O(n) and Space is O(n).
-if the code is enhanced to accept more than a single operation, then the runtime will depend on how many terms we have entered. Hence, O(n) is reasonable.
+Since we have only one main loop and the other loops are very small if in existance, then the runtime is O(n) and Space is O(n).
+If the code is enhanced to accept more than a single operation, then the runtime will depend on how many terms we have entered. Hence, O(n) is reasonable.
 
 ## Limitations and Future Enhancement
 
