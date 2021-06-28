@@ -56,7 +56,7 @@ def cliChallenge(operation):
     elif len(usedOperatorList) > 1:
         return None
     else:
-        print("Please enter an operation")
+        print("Please enter an operation or add spaces between numbers and operators")
         return False
 
 #print(cliChallenge(" -36_1/2  /    -35"))
