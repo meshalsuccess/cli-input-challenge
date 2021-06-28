@@ -17,6 +17,15 @@ The scripts run only for four operators:
 - multiplication (*)
 - division (/)
 
+## Running The Code
+
+To activate the script and use the command line, run 'main.py' file in the terminal:
+- Clone the repo or download all files to run the script
+- Right click and open with VS Code then use the run button or type the following command in the terminal:
+ ```
+ python main.py
+ ```
+ 
 ## Explaining the Approach
 
 The code was solved in two main steps:
