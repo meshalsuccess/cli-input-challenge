@@ -50,6 +50,10 @@ if the operation is multiplication:
 if the operation is division:
 - flip the right term and multiply
 
+## Runtime and Space Complexity
+
+Since we have only one main loop and the other loops are very small if existed, then the runtime is O(n) and Space is O(n).
+if the code is enhanced to accept more than a single operation, then the runtime will depend on how many terms we have entered. Hence, O(n) is reasonable.
 
 ## Limitations and Future Enhancement
 
