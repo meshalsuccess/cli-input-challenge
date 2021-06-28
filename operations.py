@@ -13,20 +13,22 @@ def operationFunctionSelector(leftFinalNum, rightFinalNum, usedOperator):
     Operation Selector selects the operation type based on operator determined in the challenge script.
 
     """
-    if usedOperator == '+':
+    if usedOperator == ' + ':
         answerTuple = additionFunction(leftFinalNum, rightFinalNum)
         
-    elif usedOperator == '-':
+    elif usedOperator == ' - ':
         answerTuple = subtractionFunction(leftFinalNum, rightFinalNum)
         
-    elif usedOperator == '*':
+    elif usedOperator == ' * ':
         answerTuple = multiplicationFunction(leftFinalNum, rightFinalNum)
        
-    elif usedOperator == '/':
+    elif usedOperator == ' / ':
         answerTuple = divisionFunction(leftFinalNum, rightFinalNum)
-        
-    finalAnswer = returnString(answerTuple[0], answerTuple[1])  
-    return finalAnswer
+    try:    
+        finalAnswer = returnString(answerTuple[0], answerTuple[1])  
+        return finalAnswer
+    except:
+        return False
 
 def additionFunction(left, right):
     """
@@ -49,16 +51,19 @@ def additionFunction(left, right):
         answerNom = leftNom + rightNom
         answerDenom = leftDenom
     else: #Step b:
-        multiplyerTuple = multiplyer(leftDenom, rightDenom, LCM(leftDenom, rightDenom)) #calling helping functions to find multiplyers, integers
-        leftMultiplyer, rightMultiplyer = multiplyerTuple[0], multiplyerTuple[1]
-        leftNom *= leftMultiplyer
-        leftDenom *= leftMultiplyer
-        rightNom *= rightMultiplyer
-        rightDenom *= rightMultiplyer #now all denoms are equal and the noms were multiplied to have the fractios balanced
-        answerNom = leftNom + rightNom #adding noms to solve for addition
-        answerDenom = leftDenom
+        try:
+            multiplyerTuple = multiplyer(leftDenom, rightDenom, LCM(leftDenom, rightDenom)) #calling helping functions to find multiplyers, integers
+            leftMultiplyer, rightMultiplyer = multiplyerTuple[0], multiplyerTuple[1]
+            leftNom *= leftMultiplyer
+            leftDenom *= leftMultiplyer
+            rightNom *= rightMultiplyer
+            rightDenom *= rightMultiplyer #now all denoms are equal and the noms were multiplied to have the fractios balanced
+            answerNom = leftNom + rightNom #adding noms to solve for addition
+            answerDenom = leftDenom
+            
+        except:
+            return False
     return answerNom, answerDenom
-
 def subtractionFunction(left, right):
     """
     The subtraction function performs subtraction used to fractions only.
@@ -80,14 +85,17 @@ def subtractionFunction(left, right):
         answerNom = leftNom - rightNom
         answerDenom = leftDenom
     else: #Step b:
-        multiplyerTuple = multiplyer(leftDenom, rightDenom, LCM(leftDenom, rightDenom)) #calling helping functions to find multiplyers, integers
-        leftMultiplyer, rightMultiplyer = multiplyerTuple[0], multiplyerTuple[1]
-        leftNom *= leftMultiplyer
-        leftDenom *= leftMultiplyer
-        rightNom *= rightMultiplyer
-        rightDenom *= rightMultiplyer #now all denoms are equal and the noms were multiplied to have the fractios balanced
-        answerNom = leftNom - rightNom #subtracting noms to solve for subtraction
-        answerDenom = leftDenom
+        try:
+            multiplyerTuple = multiplyer(leftDenom, rightDenom, LCM(leftDenom, rightDenom)) #calling helping functions to find multiplyers, integers
+            leftMultiplyer, rightMultiplyer = multiplyerTuple[0], multiplyerTuple[1]
+            leftNom *= leftMultiplyer
+            leftDenom *= leftMultiplyer
+            rightNom *= rightMultiplyer
+            rightDenom *= rightMultiplyer #now all denoms are equal and the noms were multiplied to have the fractios balanced
+            answerNom = leftNom - rightNom #subtracting noms to solve for subtraction
+            answerDenom = leftDenom
+        except:
+            return False
     return answerNom, answerDenom
 
 def multiplicationFunction(left, right):
@@ -101,6 +109,9 @@ def multiplicationFunction(left, right):
     right = findingNom(right)
     leftNom, leftDenom = left[0], left[1] #integers
     rightNom, rightDenom = right[0], right[1] #integers
+    if rightDenom == 0 or leftDenom == 0:
+        print("Illegal Operation")
+        return False
     answerNom = leftNom * rightNom #multiplying noms 
     answerDenom = leftDenom * rightDenom #multiplying denoms
     return answerNom, answerDenom
@@ -119,6 +130,9 @@ def divisionFunction(left, right):
     if rightDenom < 0 and rightNom > 0:
         rightDenom = abs(rightDenom)
         rightNom *= -1
+    if rightDenom == 0 or leftDenom == 0:
+        print("Illegal Operation")
+        return False
     answerNom = leftNom * rightNom #multiplying noms 
     answerDenom = leftDenom * rightDenom #multiplying denoms
     return answerNom, answerDenom

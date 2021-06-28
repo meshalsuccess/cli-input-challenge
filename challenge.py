@@ -26,14 +26,15 @@ def cliChallenge(operation):
     operatorIdx = 1
     while operatorIdx < len(operation)-1:
         if operation[operatorIdx -1] == " " and operation[operatorIdx +1] == " " and operation[operatorIdx] in operatorsList:
-            usedOperatorList.append(operation[operatorIdx]) #appending the operators to the used operators list
+            temp = ' ' + operation[operatorIdx] + ' '
+            usedOperatorList.append(temp) #appending the operators to the used operators list
             #break #now operatorIdx is pointing to the operator
         operatorIdx +=1
     #check if the length of the operators used is >1, if not continoue, if yes, call multiple helper function
     if len(usedOperatorList) == 1:
         usedOperator = usedOperatorList[0] #assigning the operation entered from user to UsedOperator
         ##3- find the right side number and the left side number
-        operatorIdx = operation.index(usedOperatorList[0]) #reassigning the operatodIdx to become the exact index of the operator
+        operatorIdx = operation.index(usedOperatorList[0]) + 1 #reassigning the operatodIdx to become the exact index of the operator
         leftSide = operation[ : operatorIdx] #this will assign the entire elements of the string before the operator to the rightNum
         rightSide = operation[operatorIdx+1:  ] #this will assign the entire elements of the string after the operator to the leftNum
 
@@ -47,8 +48,11 @@ def cliChallenge(operation):
 
         ##5- check the operation type
         finalAnswer = operationFunctionSelector(leftFinalNum, rightFinalNum, usedOperator)
-        finalAnswer = simplify(finalAnswer)
-        return finalAnswer
+        try:
+            finalAnswer = simplify(finalAnswer)
+            return str(finalAnswer) if finalAnswer != False else False
+        except:
+            return False
     elif len(usedOperatorList) > 1:
         return None
 

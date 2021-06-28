@@ -80,9 +80,13 @@ def LCM(leftDenom, rightDenom):
     else:
         return 1
     while True:
-        if highest % leftDenom == 0 and highest % rightDenom == 0:
-            break
-        highest +=1
+        try:
+            if highest % leftDenom == 0 and highest % rightDenom == 0:
+                break
+            highest +=1
+        except:
+            print("Illegal Operation")
+            return False
     return highest
 
 def multiplyer(leftDenom,rightDenom, lcm):
@@ -94,10 +98,12 @@ def multiplyer(leftDenom,rightDenom, lcm):
     each fraction for later calculations.
 
     """
-    leftMultiplyer = lcm//leftDenom
-    rightMultiplyer = lcm//rightDenom
-    return leftMultiplyer, rightMultiplyer
-
+    try:
+        leftMultiplyer = lcm//leftDenom
+        rightMultiplyer = lcm//rightDenom
+        return leftMultiplyer, rightMultiplyer
+    except:
+        return False
 def simplify(fraction):
     """
     Helper function that simplifies a fraction if it is improper and returns a string.
@@ -114,7 +120,7 @@ def simplify(fraction):
     
     elif abs(nom) < denom and math.gcd(abs(nom), denom) == 1: #sometimes we can have nom with abs higher than denom which means we need to simplify further
         if nom == 0:
-            return 0
+            return '0'
         finalFraction = returnString(nom, denom)
         return finalFraction
     GCF = math.gcd(abs(nom),abs(denom)) #the reason for using abs here is difinition, we cannot find gcd for -ve and +ve
@@ -123,7 +129,9 @@ def simplify(fraction):
 
     if denom == 1: #after dividing by gcf we might find have a denom ==1 like 10/5
         return nom
-    
+    elif denom == 0:
+        print("Illegal Operation")
+        return False
     wholeNum = 0
     while abs(nom) > denom: #this is tricky because if the user divides by -ve value in the cli, we need to make sure the final answer is the simplist we account for it here
         wholeNum += 1
@@ -158,9 +166,13 @@ def checkIfValid(num):
     Helper function that checks if the numbers entred by the user are in the valid format.
 
     """
-    if '/' in num:
+    if num[0] == '/':
+        print("Illegal Operation")
+        return None
+    elif '/' in num:
         try:
             lastChar = int(num[-1])
+            beforeChar = int(num[num.index('/') -1])
             return 1
         except:
             print("please enter the number in the right format")
