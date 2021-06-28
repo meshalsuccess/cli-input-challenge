@@ -55,5 +55,8 @@ def cliChallenge(operation):
             return False
     elif len(usedOperatorList) > 1:
         return None
+    else:
+        print("Please enter an operation")
+        return False
 
 #print(cliChallenge(" -36_1/2  /    -35"))

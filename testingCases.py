@@ -21,7 +21,7 @@ class TestChallenge(unittest.TestCase):
     def test_subtraction(self):
         self.assertEqual(cliChallenge('2 - 5'), '-3')
         self.assertEqual(cliChallenge('  10 -  7 '), '3')
-        self.assertEqual(cliChallenge('0 - 12/15'), '-12/15')
+        self.assertEqual(cliChallenge('0 - 12/15'), '-4/5')
         self.assertEqual(cliChallenge(' 0 - 12/14 '), '-6/7')
         self.assertEqual(cliChallenge(' -1/4 - -1/2 '), '1/4')
 
