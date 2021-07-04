@@ -53,8 +53,9 @@ def cliChallenge(operation):
             return str(finalAnswer) if finalAnswer != False else False
         except:
             return False
+
     elif len(usedOperatorList) > 1:
-        return None
+        return multipleOperations.multiOperation(operation, usedOperatorList)
     else:
         print("Please enter an operation or add spaces between numbers and operators")
         return False

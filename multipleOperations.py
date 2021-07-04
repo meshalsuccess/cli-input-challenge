@@ -13,3 +13,42 @@ current = [first char of priority operation: last char of priority operation +1]
 7- This will have a bug that we can solve later, we need an end condition
 
 """
+from helperFunctions import operationPrioritySolver
+def multiOperation(operation, usedOperatorList):
+
+    #Let's clean the code from extra spaces
+    operatorIdx, listIdx = 0,1 #intiating for while loop
+    cleanOperation = "" #will be updated with the clean operation
+    for element in operation:
+        if element != ' ':
+            cleanOperation += element + ' '
+    #now the final character is certainly a space
+    cleanOperation = cleanOperation[:-1] #removing the final space#
+    #Now we have a clean string with no extra spaces, now check for the order of operations
+    #then look for a way to take that operation and replace it with the answer
+    
+    #tempOperation = priorityFinder(cleanOperation)
+    
+    return priorityFinder(cleanOperation)
+
+def priorityFinder(cleanOperation):
+
+    while True:
+        if ' / ' in cleanOperation:
+            currentOperation = operationPrioritySolver(cleanOperation, '/')
+            cleanOperation = currentOperation
+            continue
+        elif ' * ' in cleanOperation:
+            currentOperation = operationPrioritySolver(cleanOperation, '*')
+            cleanOperation = currentOperation
+            continue
+        elif ' - ' in cleanOperation:
+            currentOperation = operationPrioritySolver(cleanOperation, '-')
+            cleanOperation = currentOperation
+            continue
+        elif ' + ' in cleanOperation:
+            currentOperation = operationPrioritySolver(cleanOperation, '+')
+            cleanOperation = currentOperation
+            continue
+        else:
+            return cleanOperation

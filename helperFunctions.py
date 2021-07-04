@@ -3,6 +3,7 @@ This script has the helping function needed.
 
 """
 import math
+import challenge
 #helper function to reduce redundant code. It takes a string and removes all the spaces from it
 def removingSpaces(numToClean): 
     """
@@ -182,3 +183,35 @@ def checkIfValid(num):
         return None
     elif '_' not in num and '/' not in num:
         return 1
+
+def operationPrioritySolver(operation, operator):
+    '''
+    The way to solve it is to look for the second space from both sides of the operator
+    then put them all together and call the challenge sovler
+    the return form that will be what we need to replace the current operation with and then
+    go on and do that again
+    
+    '''
+    idx = 0
+    while idx < len(operation) -1:
+        if operation[idx] == operator and operation[idx - 1] == ' ' and operation[idx +1] == ' ':
+            break
+        idx +=1
+
+    #intiating both indexes to point at the spaces in both sides of the operator
+    leftSpaceIdx, rightSpaceIdx = idx -2, idx +2
+    #the left index will find the first space to the left of the operator
+    while leftSpaceIdx > 0:
+        if operation[leftSpaceIdx] == ' ':
+            break
+        leftSpaceIdx -=1
+    #the right index will find the first space to the right of the operator
+    while rightSpaceIdx < len(operation):
+        if operation[rightSpaceIdx] == ' ':
+            break
+        rightSpaceIdx += 1
+    
+    #creating a string with the operation
+    currentOperation = challenge.cliChallenge(operation[leftSpaceIdx : rightSpaceIdx])#now we have an operation
+    newCleanOperation = operation[ : leftSpaceIdx] + currentOperation + operation[rightSpaceIdx : ]
+    return newCleanOperation  
